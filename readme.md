@@ -1,4 +1,4 @@
-## codeup: data science: innis: data acquisition:\
+## codeup/data-science/innis/classification:
 
 classification_exercises.ipynb\
-acquire.py\
+acquire.py
