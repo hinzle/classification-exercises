@@ -1,4 +1,4 @@
-import imports
+from imports import *
 
 def get_titanic_data(use_cache=True):
     # guard clause
