@@ -40,3 +40,4 @@ def get_telco_data(use_cache=True):
         get_db_url('telco_churn'))     
     df.to_csv('telco.csv', index=False)
     return df
+
