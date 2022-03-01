@@ -2,7 +2,6 @@
 from env import get_db_url
 import os
 
-
 # python data science library's
 from scipy import stats
 import numpy as np
