@@ -6,7 +6,7 @@ def get_titanic_data(use_cache=True):
         print('Using cached csv')
         return pd.read_csv('titanic.csv')
     print('Acquiring data from SQL database')
-    df = pd.read_sql('SELECT * FROM passengers',get_db_url('titanic_db'))
+    df=pd.read_sql('SELECT * FROM passengers',get_db_url('titanic_db'))
     df.to_csv('titanic.csv', index=False)
     return df
 
@@ -15,7 +15,7 @@ def get_iris_data(use_cache=True):
         print('Using cached csv')
         return pd.read_csv('iris.csv')
     print('Acquiring data from SQL database')
-    df = pd.read_sql(
+    df=pd.read_sql(
         '''
         SELECT * FROM measurements
         LEFT JOIN species USING (species_id)
@@ -29,7 +29,7 @@ def get_telco_data(use_cache=True):
         print('Using cached csv')
         return pd.read_csv('telco.csv')
     print('Acquiring data from SQL database')
-    df = pd.read_sql(
+    df=pd.read_sql(
         '''
         SELECT *
         FROM customers
