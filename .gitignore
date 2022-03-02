@@ -6,6 +6,7 @@ env.py
 
 # file extensions
 *.csv
+*.xlsx
 
 # hidden folders
 .ipynb_checkpoints/
