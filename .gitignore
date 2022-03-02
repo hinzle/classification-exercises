@@ -1,5 +1,6 @@
 # hidden files
 .DS_Store
+untidy-data
 
 # files
 env.py
