@@ -6,3 +6,9 @@
 - prepare.py
 ### tidy-data
 - tidy_data.ipynb
+### exploratory analysis
+- 'amendments'
+### evaluation
+- model_evaluation.ipynb
+### modeling
+- model.ipynb

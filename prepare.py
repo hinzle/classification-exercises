@@ -4,7 +4,8 @@ import acquire as acq
 def prep_iris():
 	'''
 	pulls and prepares the iris dataframe for analysis.
-	-> cleaned iris dataframe
+	
+	<-: cleaned iris dataframe
 	'''
 	print('prepping iris')
 	iris=acq.get_iris_data()
@@ -19,7 +20,8 @@ def prep_iris():
 def prep_titanic():
 	'''
 	pulls and prepares the titanic dataframe for analysis.
-	-> cleaned titanic dataframe
+	
+	<-: cleaned titanic dataframe
 	'''
 	print('prepping titanic')	
 	titanic=acq.get_titanic_data()
@@ -33,7 +35,8 @@ def prep_titanic():
 def prep_telco():
 	'''
 	pulls and prepares the telco dataframe for analysis.
-	-> cleaned telco dataframe
+	
+	<-: cleaned telco dataframe
 	'''
 	print('prepping telco')
 	telco=acq.get_telco_data()
@@ -64,10 +67,12 @@ def prep_telco():
 	telco.drop(dummy_list,axis=1)
 	return telco
 
-def trestidate(df,target_column: object):
+def tralidest(df,target_column: object):
 	'''
+	takes in a dataframe and a target name, outputs three dataframes: 'train', 'validate', 'test', each stratified on the named target. 
+	
 	->: str e.g. 'df.target_column'
-	<-: 3 x pandas.DataFrame ; 'train', 'validate','test'
+	<-: 3 x pandas.DataFrame ; 'train', 'validate', 'test'
 
 	training set is 70% of total sample
 	validate set is 20% of total sample
