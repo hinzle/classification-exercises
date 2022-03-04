@@ -13,8 +13,8 @@ def prep_iris():
 	iris3=iris2.rename({'species_name':'species'},axis=1)
 	dummy_df=pd.get_dummies(iris3.species, dummy_na=False, drop_first=True)
 	iris4=pd.concat([iris3, dummy_df], axis=1)
-	iris5=iris4.drop(['species'],axis=1)
-	return iris5
+	#iris5=iris4.drop(['species'],axis=1)
+	return iris4
 
 def prep_titanic():
 	'''
@@ -63,4 +63,24 @@ def prep_telco():
 	telco=pd.concat([telco, dummy_df], axis=1)
 	telco.drop(dummy_list,axis=1)
 	return telco
+
+def trestidate(df,target_column: object):
+	'''
+	->: str e.g. 'df.target_column'
+	<-: 3 x pandas.DataFrame ; 'train', 'validate','test'
+
+	training set is 70% of total sample
+	validate set is 20% of total sample
+	test set is 10% of total sample
+
+	'''
+	
+	# df=eval(df_with_target_column.split('.')[0])
+	# target=eval(df_with_target_column)
+	target=eval(f"df.{target_column}")
+	train, _ = train_test_split(df, test_size=.3, random_state=123, stratify=target)
+	col=eval(f"_.{target_column}")
+	validate, test = train_test_split(_, test_size=.3, random_state=123, stratify=col)
+	return train, validate, test
+
 
