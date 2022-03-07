@@ -74,18 +74,13 @@ def tralidest(df,target_column: object):
 	->: str e.g. 'df.target_column'
 	<-: 3 x pandas.DataFrame ; 'train', 'validate', 'test'
 
-	training set is 70% of total sample
-	validate set is 20% of total sample
-	test set is 10% of total sample
+	training set is 60% of total sample
+	validate set is 23% of total sample
+	test set is 17% of total sample
 
 	'''
-	
-	# df=eval(df_with_target_column.split('.')[0])
-	# target=eval(df_with_target_column)
-	target=eval(f"df.{target_column}")
-	train, _ = train_test_split(df, test_size=.3, random_state=123, stratify=target)
-	col=eval(f"_.{target_column}")
-	validate, test = train_test_split(_, test_size=.3, random_state=123, stratify=col)
+	train, _ = train_test_split(df, train_size=.6, random_state=123, stratify=df[target_column])
+	validate, test = train_test_split(_, test_size=(3/7), random_state=123, stratify=_[target_column])
 	return train, validate, test
 
 
