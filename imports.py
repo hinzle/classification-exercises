@@ -8,6 +8,7 @@ import pandas as pd
 from scipy import stats
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
+from sklearn.metrics import confusion_matrix,accuracy_score,precision_score,recall_score,classification_report
 
 # visualizations
 from pydataset import data
