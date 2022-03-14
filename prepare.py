@@ -26,6 +26,7 @@ def prep_titanic():
 	print('prepping titanic')	
 	titanic=acq.get_titanic_data()
 	titanic.drop_duplicates()
+	titanic.age.replace(to_replace=[' ',''],value=np.nan,inplace=True)
 	titanic2=titanic.drop(['passenger_id','pclass','deck','embark_town','alone'],axis=1)
 	dummy_df=pd.get_dummies(titanic2[['sex','embarked','class']], dummy_na=False, drop_first=[True,True,True])
 	titanic3=pd.concat([titanic2, dummy_df], axis=1)
@@ -64,10 +65,10 @@ def prep_telco():
 		]
 	dummy_df=pd.get_dummies(telco[dummy_list], dummy_na=False, drop_first=True)
 	telco=pd.concat([telco, dummy_df], axis=1)
-	telco.drop(dummy_list,axis=1)
+	telco.drop(dummy_list,axis=1,inplace=True)
 	return telco
 
-def tralidest(df,target_column: object):
+def tralidest(df,target_column=list):
 	'''
 	takes in a dataframe and a target name, outputs three dataframes: 'train', 'validate', 'test', each stratified on the named target. 
 	
@@ -81,6 +82,53 @@ def tralidest(df,target_column: object):
 	'''
 	train, _ = train_test_split(df, train_size=.6, random_state=123, stratify=df[target_column])
 	validate, test = train_test_split(_, test_size=(3/7), random_state=123, stratify=_[target_column])
+	train.reset_index(drop=True, inplace=True)
+	validate.reset_index(drop=True, inplace=True)
+	test.reset_index(drop=True, inplace=True)
 	return train, validate, test
 
+def impute_mode(train, validate, test, col=list):
+	'''
+	take in train, validate, and test DataFrames, impute mode for 'col',
+	and return train, validate, and test DataFrames
+	'''
+	imputer = SimpleImputer(missing_values = np.NAN, strategy='most_frequent')
+	train[col] = imputer.fit_transform(train[col])
+	validate[col] = imputer.transform(validate[col])
+	test[col] = imputer.transform(test[col])
+	return train, validate, test
 
+def ml_data(train, validate, test, target=list):
+	'''
+	->: train, validate, test 
+	<-: X_train, y_train, X_validate, y_validate, X_test, y_test
+	'''
+	X_train = train.drop(columns=target)
+	y_train = train[target]
+	X_validate = validate.drop(columns=target)
+	y_validate = validate[target]
+	X_test = test.drop(columns=target)
+	y_test = test[target]
+	return [X_train, y_train, X_validate, y_validate, X_test, y_test]
+
+def decision_tree_predict(X_train, y_train,max_depth=int):
+	clf = DecisionTreeClassifier(max_depth=max_depth, random_state=123)
+	clf=clf.fit(X_train, y_train)
+	y_pred=clf.predict(X_train)
+	y_pred_prob=clf.predict_proba(X_train)
+	labels=[str(i) for i in clf.classes_]
+	conf=pd.DataFrame(confusion_matrix(y_train,y_pred))
+	classi_report=(pd.DataFrame(classification_report(y_train, y_pred,output_dict=True)))
+	print('_________________________\n')
+	print('Accuracy of Decision Tree classifier on training set: {:.2%}\n'
+      .format(clf.score(X_train, y_train)))
+	plt.figure(figsize=(16, 9), dpi=300)
+	tree=plot_tree(clf, feature_names=X_train.columns, class_names=labels, rounded=True)
+	plt.show()
+	print('_________________________\n')
+	print('Confusion Matrix\n')
+	print(conf,'\n')
+	print('_________________________\n')
+	print('Classification Report\n')
+	print(classi_report)
+	return [clf, y_pred, y_pred_prob, tree, conf, classi_report]
