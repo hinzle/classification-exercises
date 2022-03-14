@@ -12,6 +12,8 @@ from sklearn.metrics import confusion_matrix,accuracy_score,precision_score,reca
 from sklearn.tree import DecisionTreeClassifier, plot_tree, export_text
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
+
 
 # visualizations
 from pydataset import data
