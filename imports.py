@@ -11,12 +11,11 @@ from sklearn.impute import SimpleImputer
 from sklearn.metrics import confusion_matrix,accuracy_score,precision_score,recall_score,classification_report
 from sklearn.tree import DecisionTreeClassifier, plot_tree, export_text
 from sklearn.ensemble import RandomForestClassifier
-
+from sklearn.neighbors import KNeighborsClassifier
 
 # visualizations
 from pydataset import data
 import matplotlib.pyplot as plt
-%matplotlib inline
 import seaborn as sns
 
 

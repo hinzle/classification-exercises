@@ -131,4 +131,4 @@ def decision_tree_predict(X_train, y_train,max_depth=int):
 	print('_________________________\n')
 	print('Classification Report\n')
 	print(classi_report)
-	return [clf, y_pred, y_pred_prob, tree, conf, classi_report]
+	return [clf, tree, y_pred, y_pred_prob, conf, classi_report]
